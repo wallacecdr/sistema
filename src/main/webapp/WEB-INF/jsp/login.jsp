@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="style/css_login.css" rel="stylesheet">
-<link href="bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="style/css_login.css">
+<link rel="stylesheet" href="bootstrap-4.3.1/css/bootstrap.min.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -39,9 +38,6 @@
 
 		</div>
 	</div>
-
-	<script type="text/javascript"
-		src="bootstrap-4.3.1/js/bootstrap.min.js"></script>
 	<script src="jquery/jquery.min.js"></script>
 </body>
 </html>

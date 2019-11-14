@@ -1,99 +1,102 @@
 package com.sistema.model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "Usuario")
-public class Usuario
-        implements Serializable {
+public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "usuario_id_sequence")
-    private long id;
-    @Column(length = 30, nullable = false)
-    private String usuario;
-    @Column(length = 255, nullable = false)
-    private String pass;
-    @Column(length = 100, nullable = false)
-    private String nome;
-    @Column(length = 60)
-    private String celular;
-    @Column(columnDefinition = "smallint default 0", nullable = false)
-    private int inativo;
-    @Column(columnDefinition = "smallint default 0", nullable = false)
-    private int alterasenhaproximologin;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    public Usuario() {
-    }
+	private String login;
+	private String senha;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuarios_role", 
+	     joinColumns = @JoinColumn(name = "usuario_id", 
+	                   referencedColumnName = "id",
+	                   table = "usuario"),  // cria tabela de acesso do usuário
+			
+			inverseJoinColumns = @JoinColumn(name="role_id",
+								referencedColumnName = "id",
+								table = "role"))
+	
+	private List<Role> roles;
+	
 
-    public Usuario(long id, String user, String pass) {
-        this.id = id;
-        this.usuario = user;
-        this.pass = pass;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public long getId() {
-        return this.id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public String getUsuario() {
-        return this.usuario;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public void setUsuario(String user) {
-        this.usuario = user;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public String getPass() {
-        return this.pass;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	@Override
+	public String getPassword() {
+		return senha;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	@Override
+	public String getUsername() {
+		return login;
+	}
 
-    public String getCelular() {
-        return celular;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    public int getInativo() {
-        return inativo;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    public void setInativo(int inativo) {
-        this.inativo = inativo;
-    }
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
-    public int getAlterasenhaproximologin() {
-        return alterasenhaproximologin;
-    }
-
-    public void setAlterasenhaproximologin(int alterasenhaproximologin) {
-        this.alterasenhaproximologin = alterasenhaproximologin;
-    }
 }
-
