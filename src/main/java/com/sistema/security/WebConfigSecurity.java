@@ -48,6 +48,9 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		
 		auth.userDetailsService(implementacaoUserDetailsService)
 		.passwordEncoder(new BCryptPasswordEncoder());
+		
+		System.out.println("senha" + new BCryptPasswordEncoder().encode("admin"));
+		
 	
 	}
 	
