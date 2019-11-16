@@ -29,11 +29,11 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		.antMatchers("/jquery/**").permitAll()
 		.antMatchers("/style/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
-		.antMatchers(HttpMethod.GET, "/cadastropessoa").hasAnyRole("ADMIN")
+		.antMatchers(HttpMethod.GET, "/main").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()// permite qualquer usuário
         .loginPage("/login")
-        .defaultSuccessUrl("/cadastropessoa")
+        .defaultSuccessUrl("/main")
         .failureUrl("/login?error=true")
         .and()
         .logout().logoutSuccessUrl("/login")
