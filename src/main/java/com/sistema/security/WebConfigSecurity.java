@@ -27,9 +27,12 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		.authorizeRequests() // Pertimi restringir acessos
 		.antMatchers("/bootstrap-4.3.1/**").permitAll()
 		.antMatchers("/jquery/**").permitAll()
-		.antMatchers("/style/**").permitAll()
+		.antMatchers("/style_css/**").permitAll()
+		.antMatchers("/style_js/**").permitAll()
+		.antMatchers("/style_scss/**").permitAll()
+		.antMatchers("/vendor/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
-		.antMatchers(HttpMethod.GET, "/main").hasAnyRole("ADMIN")
+		//.antMatchers(HttpMethod.GET, "/main").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()// permite qualquer usuário
         .loginPage("/login")
