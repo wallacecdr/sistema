@@ -29,7 +29,7 @@
 					<th scope="row">${entidade.id}</th>
 					<td>${entidade.nome}</td>
 					<td><a href="editarEntidade?id=${entidade.id}">Editar</a></td>
-					<td><a href="excluirEntidade?id=${entidade.id}">Excluir</a></td>
+					<td><a href="excluirEntidade?id=${entidade.id}" onclick="return confirmacao();">Excluir</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -38,4 +38,11 @@
 	<c:import url="../outros/fim_conteudo.jsp"></c:import>
 	<c:import url="../outros/import_footer.jsp"></c:import>
 </body>
+<script>
+	function confirmacao(){
+		var resposta = confirm("Deseja mesmo remover o registro?");
+		
+		return resposta;
+	}
+</script>
 </html>

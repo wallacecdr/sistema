@@ -10,3 +10,6 @@
 
 <!-- Custom styles for this template-->
 <link href="style_css/sb-admin.css" rel="stylesheet">
+
+<!-- Css JQuery -->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
