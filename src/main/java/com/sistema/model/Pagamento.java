@@ -18,7 +18,9 @@ import javax.persistence.Table;
 @Table(name = "Pagamento")
 public class Pagamento implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "pagamento_id_sequence")
     private Long id;
     @OneToOne

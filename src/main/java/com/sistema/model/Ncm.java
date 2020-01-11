@@ -23,9 +23,11 @@ import org.hibernate.annotations.Type;
 @Table(name = "Ncm")
 public class Ncm implements Serializable {
     
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "ncm_id_sequence")
-    private int id;
+    private Long id;
     @Column(length = 10)
     private String codigo;
     @Column(length = 3)
@@ -46,11 +48,11 @@ public class Ncm implements Serializable {
     @Column
     private short inativo;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -21,7 +21,9 @@ import javax.persistence.Table;
 @Table(name = "Unidademedida")
 public class Unidademedida implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "unidademedida_id_sequence")
     private Long id;
     @Column(length = 10)

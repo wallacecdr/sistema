@@ -9,28 +9,30 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cep")
+@Table(name = "cep")
 public class Cep
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cep_id_sequence")
-    private long id;
+    private Long id;
     @Column
     private String endereco;
     @Column
     private String bairro;
     @Column
-    private long idcidade;
+    private Long idcidade;
     @Column
-    private long idmunicipio;
+    private Long idmunicipio;
     @Column
     private String cep;
 
     public Cep() {
     }
 
-    public Cep(long id, String endereco, String bairro, long idcidade, long idmunicipio, String cep) {
+    public Cep(Long id, String endereco, String bairro, Long idcidade, Long idmunicipio, String cep) {
         this.id = id;
         this.endereco = endereco;
         this.bairro = bairro;
@@ -39,11 +41,11 @@ public class Cep
         this.cep = cep;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -63,19 +65,19 @@ public class Cep
         this.bairro = bairro;
     }
 
-    public long getIdcidade() {
+    public Long getIdcidade() {
         return this.idcidade;
     }
 
-    public void setIdcidade(long idcidade) {
+    public void setIdcidade(Long idcidade) {
         this.idcidade = idcidade;
     }
 
-    public long getIdmunicipio() {
+    public Long getIdmunicipio() {
         return this.idmunicipio;
     }
 
-    public void setIdmunicipio(long idmunicipio) {
+    public void setIdmunicipio(Long idmunicipio) {
         this.idmunicipio = idmunicipio;
     }
 

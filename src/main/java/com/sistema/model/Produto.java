@@ -17,10 +17,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Produto")
 public class Produto implements Serializable {
-    @Id
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "produto_id_sequence")
     @Column(columnDefinition = "bigserial")
-    private int id;
+    private Long id;
     @ManyToOne
     private Unidademedida unidademedida;
     @ManyToOne
@@ -80,11 +83,11 @@ public class Produto implements Serializable {
     @Column(precision = 5, scale = 2)
     private BigDecimal percredbasepiscofinsentrada;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
