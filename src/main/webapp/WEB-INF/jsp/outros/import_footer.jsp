@@ -14,10 +14,8 @@
   <script src="style_js/sb-admin.min.js"></script>
     
   <!-- Script para o JQuery -->
-  <script type="text/javascript" 
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" 
-		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
   <!-- Script para campos com maskara -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+   

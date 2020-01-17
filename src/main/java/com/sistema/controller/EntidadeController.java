@@ -1,6 +1,5 @@
 package com.sistema.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sistema.model.Cidade;
 import com.sistema.model.Entidade;
 import com.sistema.model.Estado;
+import com.sistema.model.Pais;
+import com.sistema.repository.CidadeRepository;
 import com.sistema.repository.EntidadeRepository;
 import com.sistema.repository.EstadoRepository;
+import com.sistema.repository.PaisRepository;
 
 @Controller
 public class EntidadeController {
@@ -27,16 +30,24 @@ public class EntidadeController {
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	@Autowired
+	private PaisRepository paisRepository;
 	
 	@GetMapping("/incluirEntidade")
 	public ModelAndView incluir() {
 	
 		Iterable<Estado> estados = estadoRepository.findAll();
+		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado("EX");
+		Iterable<Pais> paises = paisRepository.findAll();
 		
 		ModelAndView view = new ModelAndView("cadastro/cadastro_entidade");
 		view.addObject("tipo", "Cliente");
 		view.addObject("entidade", new Entidade());
+		view.addObject("cidades", cidades);
 		view.addObject("estados", estados);
+		view.addObject("paises", paises);
 		
 		return view;
 	}

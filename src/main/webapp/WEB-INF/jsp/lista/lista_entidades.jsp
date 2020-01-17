@@ -13,8 +13,8 @@
 		<li class="breadcrumb-item active">Clientes</li>
 		<li class="breadcrumb-item"><a href="incluirEntidade">Incluir</a></li>
 	</ol>
-
-	<table class="table">
+	
+	<table class="table table-sm">
 		<thead>
 			<tr>
 				<th scope="col">Código</th>
