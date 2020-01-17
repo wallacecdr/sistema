@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Empresa")
+@Table(name = "empresa")
 public class Empresa
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "empresa_id_sequence")
-    private long id;
+    private Long id;
     @Column(length = 4)
     private String codigo;
     @Column
@@ -51,11 +53,11 @@ public class Empresa
     @Column(length = 200)
     private String site;
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

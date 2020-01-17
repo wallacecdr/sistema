@@ -13,9 +13,11 @@ import javax.persistence.Table;
 public class Estado
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "estado_id_sequence")
-    private int id;
+    private Long id;
     @Column
     private String codigo;
     @Column
@@ -28,7 +30,7 @@ public class Estado
     public Estado() {
     }
 
-    public Estado(int id, String codigo, String nome, int codigoibge, int idpais) {
+    public Estado(Long id, String codigo, String nome, int codigoibge, int idpais) {
         this.id = id;
         this.codigo = codigo;
         this.nome = nome;
@@ -36,11 +38,11 @@ public class Estado
         this.idpais = idpais;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

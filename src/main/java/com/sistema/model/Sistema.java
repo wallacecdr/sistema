@@ -23,7 +23,9 @@ import javax.persistence.Table;
 public class Sistema
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sistema_id_sequence")
     private long id;
     @Column

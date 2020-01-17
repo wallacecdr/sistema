@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cidade")
+@Table(name = "cidade")
 public class Cidade
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "cidade_id_sequence")
-    private int id;
+    private Long id;
     @Column
     private int codigo;
     @Column
@@ -28,7 +30,7 @@ public class Cidade
     public Cidade() {
     }
 
-    public Cidade(int id, int codigo, int idestado, int codigoibge, String nome) {
+    public Cidade(Long id, int codigo, int idestado, int codigoibge, String nome) {
         this.id = id;
         this.codigo = codigo;
         this.idestado = idestado;
@@ -36,11 +38,11 @@ public class Cidade
         this.nome = nome;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

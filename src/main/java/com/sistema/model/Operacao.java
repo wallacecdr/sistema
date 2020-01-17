@@ -18,10 +18,12 @@ import javax.persistence.Temporal;
  * @author Wallace Caldeira
  */
 @Entity
-@Table(name = "Operacao")
+@Table(name = "operacao")
 public class Operacao implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "operacao_id_sequence")
     private Long id;
     @Column

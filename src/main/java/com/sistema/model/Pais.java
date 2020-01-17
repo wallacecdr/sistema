@@ -13,9 +13,11 @@ import javax.persistence.Table;
 public class Pais
         implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "pais_id_sequence")
-    private int id;
+    private Long id;
     @Column
     private String nome;
     @Column
@@ -24,17 +26,17 @@ public class Pais
     public Pais() {
     }
 
-    public Pais(int id, String nome, int codigoibge) /*    */ {
+    public Pais(Long id, String nome, int codigoibge) /*    */ {
         this.id = id;
         this.nome = nome;
         this.codigoibge = codigoibge;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
