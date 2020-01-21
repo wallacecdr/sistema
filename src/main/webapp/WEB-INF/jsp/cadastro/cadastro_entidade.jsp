@@ -138,9 +138,13 @@
 						</div>
 						<div class="form-row">
 							<div class="col-md-3 mb-4">
-						  		<select onchange="alterarPainel()" name="pessoa" class="form-control form-control-sm" id="pessoa">
-									<option value="">Física</option>
-									<option>Jurídica</option>
+						  		<select onchange="alterarPainel()" name="tipopessoa" class="form-control form-control-sm" id="tipopessoa">
+									<option value="0"
+										<c:if test="${entidade.tipopessoa == 0}">selected="selected"</c:if>
+									>Física</option>
+									<option value="1"
+										<c:if test="${entidade.tipopessoa == 1}">selected="selected"</c:if>
+									>Jurídica</option>
 								</select>
 							</div>
 						</div>
@@ -193,7 +197,8 @@
 							<div class="col-md-2 mb-0">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="cliente" name="cliente" 
-										<c:if test="${entidade.cliente == 1}">checked="checked"</c:if>
+										<c:if test="${entidade.cliente == 1 || tipo == 'Cliente'}">checked="checked"</c:if>
+										<c:if test="${tipo == 'Cliente'}">disabled="disabled"</c:if>
 									>
 									<label class="custom-control-label" for="cliente">Cliente</label>
 								</div>
@@ -215,16 +220,27 @@
 							<div class="col-md-12 mb-0">
 								<ul class="nav nav-tabs" id="myTab" role="tablist">
 							    <li class="nav-item">
-							      <a class="nav-link active" id="home-tab" onclick="alterarComboBox('fisica')" data-toggle="tab" href="#fisica" role="tab" aria-controls="home" aria-selected="true">Física</a>
+							      <a 
+							      	<c:if test="${entidade.tipopessoa == 0}">class="nav-link active"</c:if>	
+							      	<c:if test="${entidade.tipopessoa == 1}">class="nav-link"</c:if>	
+							      	id="home-tab" onclick="alterarComboBox('fisica')" data-toggle="tab" href="#fisica" role="tab" aria-controls="home" aria-selected="true">Física</a>
 							    </li>
 							    <li class="nav-item">
-							      <a class="nav-link" id="profile-tab" onclick="alterarComboBox('juridica')" data-toggle="tab" href="#juridica" role="tab" aria-controls="profile" aria-selected="false">Jurídica</a>
+							      <a
+							      	<c:if test="${entidade.tipopessoa == 1}">class="nav-link active"</c:if>	
+							      	<c:if test="${entidade.tipopessoa == 0}">class="nav-link"</c:if>	 
+							       id="profile-tab" onclick="alterarComboBox('juridica')" data-toggle="tab" href="#juridica" role="tab" aria-controls="profile" aria-selected="false">Jurídica</a>
 							    </li>
 							  </ul>
 							
 							  <!-- Tab panes -->
 							  <div class="tab-content" id="myTabContent">
-							    <div class="tab-pane fade show active" id="fisica" role="tabpanel" aria-labelledby="home-tab"><br>
+							  
+							  	<!-- Primeira aba -->
+							    <div 
+							    	 <c:if test="${entidade.tipopessoa == 0}">class="tab-pane fade show active"</c:if>	
+							    	 <c:if test="${entidade.tipopessoa == 1}">class="tab-pane fade"</c:if>	
+							    	 id="fisica" role="tabpanel" aria-labelledby="home-tab"><br>
 							      	<div class="form-row">
 							      		
 							      		<div class="col-md-6 order-md-1">
@@ -239,14 +255,16 @@
 								      			<div class="form-row">
 								      				<label for="cpf" class="col-sm-12 col-form-label col-form-label-sm">Cpf</label> 
 								      			</div>
-												<input type="text" name="cpfcnpj" class="form-control form-control-sm" 
-													id="cpf" placeholder="Cpf" value="${entidade.cpfcnpj}">
+												<input type="text" class="form-control form-control-sm" 
+													id="cpf" placeholder="Cpf" name="cpf"
+													<c:if test="${entidade.tipopessoa == 0}">value="${entidade.cpfcnpj}"</c:if>
+												>
 												
 												<div class="form-row">	
 													<label for="rg" class="col-sm-12 col-form-label col-form-label-sm">Rg</label>
 												</div> 
 												<input type="text" class="form-control form-control-sm" 
-													id="rg" placeholder="Rg" value="${entidade.rg}">
+													id="rg" name="rg" placeholder="Rg" value="${entidade.rg}">
 											</div>
 										</div>
 										
@@ -254,79 +272,105 @@
 											<div class="col-md-12 mb-0">
 												
 												<div class="form-row">
-													<label for="tipocontribuintepj" class="col-sm-12 col-form-label col-form-label-sm">Tipo de contribuinte</label> 
+													<label for="tipocontribuintepf" class="col-sm-12 col-form-label col-form-label-sm">Tipo de contribuinte</label> 
 												</div>
 												<select
-													class="form-control form-control-sm" id="tipocontribuintepj">
-													<option value="">Não contribuinte</option>
-													<option>Contribuinte Isento</option>
-													<option>Contribuinte ICMS</option>
+													class="form-control form-control-sm" id="tipocontribuintepf" name="tipocontribuintepf">
+													<option value="9"
+														<c:if test="${entidade.tipocontribuinte == 9}">selected="selected"</c:if>
+													>Não contribuinte</option>
+													<option value="2"
+														<c:if test="${entidade.tipocontribuinte == 2}">selected="selected"</c:if>
+													>Contribuinte Isento</option>
+													<option value="1"
+														<c:if test="${entidade.tipocontribuinte == 1}">selected="selected"</c:if>
+													>Contribuinte ICMS</option>
 												</select>
 												
 												
 												<div class="form-row">
-													<label for="inscricaoestadualpj" class="col-sm-12 col-form-label col-form-label-sm">Inscrição estadual</label>
+													<label for="inscricaoestadualpf" class="col-sm-12 col-form-label col-form-label-sm">Inscrição estadual</label>
 												</div> 
-												<input type="text" class="form-control form-control-sm" 
-													id="inscricaoestadualpj" placeholder="Inscrição estadual" value="${entidade.inscricaoestadual}">	
+												<input type="text" class="form-control form-control-sm" id="inscricaoestadualpf" name="inscricaoestadualpf" placeholder="Inscrição estadual" 
+													<c:if test="${entidade.tipopessoa == 0}">value="${entidade.inscricaoestadual}"</c:if>
+													<c:if test="${entidade.tipocontribuinte == 9}">readonly="readonly"</c:if>
+												>	
 											</div>
 										</div>
 										
 									</div>
 							    </div>
 							    
-							    <div class="tab-pane fade" id="juridica" role="tabpanel" aria-labelledby="profile-tab"><br>
+							    <!-- Segunda aba -->
+							    <div 
+							    	<c:if test="${entidade.tipopessoa == 1}">class="tab-pane fade show active"</c:if>	
+							    	<c:if test="${entidade.tipopessoa == 0}">class="tab-pane fade"</c:if>	
+							    	id="juridica" role="tabpanel" aria-labelledby="profile-tab"><br>
 							      	<div class="form-row">
-							      		
+							      		<div class="col-md-12">
+									      	<div class="col-md-12 mb-0">
+							      				<div class="form-row">
+							      					<label for="razaosocial" class="col-sm-12 col-form-label col-form-label-sm">Razão Social</label>
+												</div>	
+											<input type="text" class="form-control form-control-sm" maxlength="60" name="razaosocial"
+													id="razaosocial" placeholder="Razão Social"	value="${entidade.razaosocial}">
+										</div>
+										</div>
 							      		<div class="col-md-6 order-md-1">
 									      	<div class="col-md-11 mb-0">
 									      		<div class="form-row">
-													<label for="razaosocial" class="col-sm-12 col-form-label col-form-label-sm">Razão Social</label>
-												</div> 
-												<input type="text" class="form-control form-control-sm" 
-													id="razaosocial" placeholder="Razão Social"	value="${entidade.razaosocial}">
+													<label for="tipocontribuintepj" class="col-sm-12 col-form-label col-form-label-sm">Tipo de contribuinte</label> 
+												</div>
+												<select
+													class="form-control form-control-sm" id="tipocontribuintepj" name="tipocontribuintepj">
+													<option value="9"
+														<c:if test="${entidade.tipocontribuinte == 9}">selected="selected"</c:if>
+													>Não contribuinte</option>
+													<option value="2"
+														<c:if test="${entidade.tipocontribuinte == 2}">selected="selected"</c:if>
+													>Contribuinte Isento</option>
+													<option value="1"
+														<c:if test="${entidade.tipocontribuinte == 1}">selected="selected"</c:if>
+													>Contribuinte ICMS</option>
+												</select>
 												
 												<div class="form-row">
-													<label for="cnpj" class="col-sm-12 col-form-label col-form-label-sm">Cnpj</label> 
+													<label for="inscricaoestadual" class="col-sm-12 col-form-label col-form-label-sm">Inscrição estadual</label> 
 												</div>
-												<input type="text" name="cpfcnpj"
-													class="form-control form-control-sm" id="cnpj" placeholder="cnpj">
+												<input type="text" class="form-control form-control-sm" id="inscricaoestadualpj" name="inscricaoestadualpj" placeholder="Inscrição estadual" 
+													<c:if test="${entidade.tipopessoa == 1}">value="${entidade.inscricaoestadual}"</c:if>
+													<c:if test="${entidade.tipocontribuinte == 9}">readonly="readonly"</c:if>
+												>
 											</div>
 										</div>
 										
 										<div class="col-md-6 order-md-2">
 											<div class="col-md-12 mb-0">
 												<div class="form-row">
-													<label for="tipocontribuinte" class="col-sm-12 col-form-label col-form-label-sm">Tipo de contribuinte</label> 
-												</div>
-												<select
-													class="form-control form-control-sm" id="tipocontribuinte">
-													<option value="">Não contribuinte</option>
-													<option>Contribuinte Isento</option>
-													<option>Contribuinte ICMS</option>
-												</select>
-												
-												<div class="form-row">
-													<label for="inscricaoestadual" class="col-sm-12 col-form-label col-form-label-sm">Inscrição estadual</label> 
+													<label for="cnpj" class="col-sm-12 col-form-label col-form-label-sm">Cnpj</label> 
 												</div>
 												<input type="text"
-													class="form-control form-control-sm" id="inscricaoestadual" placeholder="Inscrição estadual" value="${entidade.inscricaoestadual}">	
+													<c:if test="${entidade.tipopessoa == 1}">value="${entidade.cpfcnpj}"</c:if>
+													class="form-control form-control-sm" id="cnpj" name="cnpj" placeholder="cnpj">
 											</div>
 										</div>
-										</div>
 									</div>
-							    </div>
-							  </div>
-							</div>
+								</div>
+						    </div>
+			 			</div>
 					</div>
+				</div>
 			</div>
 		</div>
-		</div>
+	</div>
 		
 				
 		<div class="form-row">
-			<div class="col-sm-12 mb-3">
-				<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+			<div class="col-sm-6 mb-3">
+				<a href="/sistema/entidades"><button type="Button" class="btn btn-primary btn-sm">Cancelar</button></a> 
+			</div>
+			<div class="col-sm-6 mb-0">
+				<button type="submit" class="btn btn-primary btn-sm float-right">Salvar</button>
 			</div>
 		</div>
 		
@@ -370,150 +414,6 @@
 	</script>
 	
 	<!-- Script específico -->
-	<script>
-		/*Máscaras*/
-		$('#cep').mask("99.999-999");
-		$('#cpf').mask("999.999.999-99");
-		$('#cnpj').mask("99.999.999/9999-99");
-		$('#fone').mask("(99)9999-9999");
-		$('#celular').mask("(99)99999-9999");
-		
-		/*Insere a data atual no campo nascimento
-		var todayDate = new Date().toISOString().slice(0, 10);
-		document.getElementById('nascimento').value = todayDate;*/
-		
-		/*Função que altera o painel de dados para pessoa física ou jurídica*/
-		function alterarPainel(){
-			
-			var e = document.getElementById("pessoa");
-			var itemSelecionado = e.options[e.selectedIndex].value;
-
-			if(itemSelecionado == "Jurídica"){
-				$('#myTab a[href="#juridica"]').tab('show')
-			}else{
-				$('#myTab a[href="#fisica"]').tab('show')
-			}
-		}
-		
-		/*Função que altera o combobox de acordo com a aba selecionada no tabbedpane*/
-		function alterarComboBox(tipoPessoa){
-			
-			var e = document.getElementById("pessoa");
-			
-			if(tipoPessoa == "fisica"){
-				e.value = e.options[0].value;	
-			}else{
-				e.value = e.options[1].value;
-			}
-		}
-	</script>
-	
-	<!-- JavaScript ViaCep -->
-    <script type="text/javascript" >
-
-        $(document).ready(function() {
-
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#ender").val("");
-                $("#bairro").val("");
-                //$("#cidade").val("");
-                $("#estado").val("");
-                //$("#ibge").val("");
-            }
-            
-            //Quando o campo cep perde o foco.
-            $("#cep").blur(function() {
-      
-
-                //Nova variável "cep" somente com dígitos.
-                var cep = $(this).val().replace(/\D/g, '');
-
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#rua").val("...");
-                        $("#bairro").val("...");
-                        $("#cidade").val("...");
-                        $("#estado").val("...");
-                        $("#ibge").val("...");
-
-                        //Consulta o webservice viacep.com.br/
-                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
-                            if (!("erro" in dados)) {
-                                //Atualiza os campos com os valores da consulta.
-                                var endereco = dados.logradouro;
-                                var cidade = dados.localidade;
-                                var estado = dados.uf;
-                                
-                                $("#endereco").val(endereco.toUpperCase());
-                                $("#bairro").val(dados.bairro);
-                                $("#estado").val(estado.toUpperCase());
-//                                 $("#cidade").val(cidade.toUpperCase());
-								setCidade(cidade.toUpperCase());
-                                $("#ibge").val(dados.ibge);
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
-                                alert("CEP não encontrado.");
-                            }
-                        });
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">	
-    
-    	/*Função para setar a cidade quando*/
-    	function setCidade(city){
-   			var base_url = "/getCidades";
-			$.get("${pageContext.request.contextPath}/getCidades?codEstado="+$('#estado').val(), function(responseJson) {
-   				var $select = $("#cidade");
-                   $select.find("option").remove(); 
-                   $.each(responseJson, function(index, cidade) {
-                   	   if(cidade.nome != city){
-                       		$("<option>").val(cidade.nome).text(cidade.nome).appendTo($select);
-                       }else{
-                       		$("<option>").val(cidade.nome).text(cidade.nome).attr('selected','selected').appendTo($select);
-                       }
-                   });                   
-                    
-               });
-    	}
-    
-    	$(function(){
-    		var base_url = "/getCidades";
-			$('#estado').change(function(){
-// 				$.get("${pageContext.request.contextPath}/getCidades?codEstado="+$('#estado').val(), function(responseJson) {
-//     				var $select = $("#cidade");
-//                     $select.find("option").remove();  
-//                     $.each(responseJson, function(index, cidade) {
-//                         $("<option>").val(cidade.nome).text(cidade.nome).appendTo($select);
-//                     });                   
-                     
-//                 });
-				setCidade("");
-    		});
-    	});	
-    </script>
+	<script src='<c:url value = "/style_js/entidade.js"></c:url>'></script>
 </body>
 </html>

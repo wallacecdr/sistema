@@ -39,7 +39,7 @@ public class EntidadeController {
 	public ModelAndView incluir() {
 	
 		Iterable<Estado> estados = estadoRepository.findAll();
-		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado("EX");
+		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado("PR");
 		Iterable<Pais> paises = paisRepository.findAll();
 		
 		ModelAndView view = new ModelAndView("cadastro/cadastro_entidade");
@@ -54,13 +54,32 @@ public class EntidadeController {
 	
 	@PostMapping(path="/salvarEntidade")
 	public ModelAndView cadastrar(Entidade entidade, BindingResult br, HttpServletRequest request) {
+		/*Define a entidade como cliente*/
+		entidade.setCliente(1);
 		
 		String estadoSelecionado = request.getParameter("estado");
+		String cidadeSelecionada = request.getParameter("cidade");
+		String paisSelecionado = request.getParameter("pais");
 		
 		/*Valida o estado selecionado*/
 		if(estadoSelecionado != null && !estadoSelecionado.isEmpty()) {
 			Estado estado = estadoRepository.getEstadoByCodigo(estadoSelecionado);
 			entidade.setEstado(estado);
+		}
+		
+		/*Valida a cidade selecionada*/
+		if(cidadeSelecionada != null && !cidadeSelecionada.isEmpty()) {
+			Cidade cidade = cidadeRepository.getCidadeByNome(cidadeSelecionada);
+			entidade.setCidade(cidade);
+		}
+		
+		/*Valida o pais selecionado*/
+		if(paisSelecionado != null && !paisSelecionado.isEmpty()) {
+			Pais pais = paisRepository.getPaisByNome(paisSelecionado);
+			entidade.setPais(pais);
+		}else {
+			Pais pais = paisRepository.getPaisByNome("BRASIL");
+			entidade.setPais(pais);
 		}
 		
 		String cliente = request.getParameter("cliente");
@@ -84,6 +103,25 @@ public class EntidadeController {
 				entidade.setFornecedor(0);
 			}
 		}
+		
+		String inscricaoEstadual = "";
+		String tipocontribuinte = "";
+		String cpfcnpj = "";
+		
+		/*Valida a inscricao estadual, tipo de contribuinte e cpf/cnpj para pf(0) ou pj(1)*/
+		if(entidade.getTipopessoa() == 0) {
+			inscricaoEstadual = request.getParameter("inscricaoestadualpf");
+			tipocontribuinte = request.getParameter("tipocontribuintepf");
+			cpfcnpj = request.getParameter("cpf");
+		}else {
+			inscricaoEstadual = request.getParameter("inscricaoestadualpj");
+			tipocontribuinte = request.getParameter("tipocontribuintepj");
+			cpfcnpj = request.getParameter("cnpj");
+		}
+		
+		entidade.setInscricaoestadual(inscricaoEstadual);
+		entidade.setTipocontribuinte(Integer.parseInt(tipocontribuinte));
+		entidade.setCpfcnpj(cpfcnpj);
 		
 		entidadeRepository.save(entidade);
 		
@@ -118,15 +156,19 @@ public class EntidadeController {
 	@GetMapping(path="/editarEntidade")
 	@ResponseBody
 	public ModelAndView editar(@RequestParam(required = true) Long id) {
-
+		
 		ModelAndView view = new ModelAndView("cadastro/cadastro_entidade");
 		
 		Optional<Entidade> entidade = entidadeRepository.findById(id);
 		Iterable<Estado> estados = estadoRepository.findAll();
+		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado(entidade.get().getEstado().getCodigo());
+		Iterable<Pais> paises = paisRepository.findAll();
 		
 		view.addObject("tipo", "Cliente");
 		view.addObject("entidade", entidade.get());
+		view.addObject("cidades", cidades);
 		view.addObject("estados", estados);
+		view.addObject("paises", paises);
 		
 		return view;
 	}
