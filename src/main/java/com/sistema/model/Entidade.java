@@ -284,10 +284,6 @@ public class Entidade implements java.io.Serializable {
     public void setRazaosocial(String razaoSocial) {
         this.razaosocial = razaoSocial;
     }
-    
-    
-    
-
 
 }
 

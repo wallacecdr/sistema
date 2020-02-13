@@ -12,6 +12,9 @@
 
   <!-- Custom scripts for all pages-->
   <script src="style_js/sb-admin.min.js"></script>
+  
+  <!-- Script Tabela -->
+  <script src="demo/datatables-demo.js"></script>
     
   <!-- Script para o JQuery -->
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -21,4 +24,6 @@
   
   <!-- Script de limite de caracteres -->
   <script src="/jquery/bootstrap-maxlength.js"></script>
+  
+<!--   <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
    

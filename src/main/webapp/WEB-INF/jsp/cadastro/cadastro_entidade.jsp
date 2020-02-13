@@ -11,8 +11,6 @@
 <head>
 <c:import url="../outros/import_head.jsp"></c:import>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
- 
 </head>
 <body id="page-top">
 	<c:import url="../outros/menu.jsp" />
@@ -21,7 +19,7 @@
 		<li class="breadcrumb-item active"><c:out value="${tipo}"></c:out></li>
 	</ol>
 
-	<form class="needs-validation" method="post" action="salvarEntidade">
+	<form class="needs-validation" method="post" action="salvarEntidade?tipo=${tipo.toLowerCase()}">
 
 		<div class="form-row">
 
@@ -198,7 +196,7 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="cliente" name="cliente" 
 										<c:if test="${entidade.cliente == 1 || tipo == 'Cliente'}">checked="checked"</c:if>
-										<c:if test="${tipo == 'Cliente'}">disabled="disabled"</c:if>
+										<c:if test="${tipo.equalsIgnoreCase('cliente')}">disabled="disabled"</c:if>
 									>
 									<label class="custom-control-label" for="cliente">Cliente</label>
 								</div>
@@ -207,6 +205,7 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" name="fornecedor" id="fornecedor"
 										<c:if test="${entidade.fornecedor == 1}">checked="checked"</c:if>
+										<c:if test="${tipo.equalsIgnoreCase('fornecedor')}">disabled="disabled"</c:if>
 									> 
 									<label class="custom-control-label"	for="fornecedor">Fornecedor</label>
 								</div>
@@ -367,7 +366,7 @@
 				
 		<div class="form-row">
 			<div class="col-sm-6 mb-3">
-				<a href="/sistema/entidades"><button type="Button" class="btn btn-primary btn-sm">Cancelar</button></a> 
+				<a href="/sistema/entidades?tipo=${tipo.toLowerCase()}"><button type="Button" class="btn btn-primary btn-sm">Cancelar</button></a> 
 			</div>
 			<div class="col-sm-6 mb-0">
 				<button type="submit" class="btn btn-primary btn-sm float-right">Salvar</button>

@@ -62,7 +62,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
+    <ul class="sidebar navbar-nav toggled">
       <li class="nav-item active">
         <a class="nav-link" href="index.html">
           <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
@@ -76,8 +76,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <!-- <h6 class="dropdown-header">Login Screens:</h6> -->
-          <a class="dropdown-item" href="entidades">Clientes</a>
-          <a class="dropdown-item" href="menu">Fornecedores</a>
+          <a class="dropdown-item" href="entidades?tipo=cliente">Clientes</a>
+          <a class="dropdown-item" href="entidades?tipo=fornecedor">Fornecedores</a>
           <a class="dropdown-item" href="register.html">Empresa</a>
           <a class="dropdown-item" href="forgot-password.html">Produtos</a>
           <!-- <div class="dropdown-divider"></div>

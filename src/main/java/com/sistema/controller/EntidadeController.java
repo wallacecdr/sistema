@@ -35,16 +35,47 @@ public class EntidadeController {
 	@Autowired
 	private PaisRepository paisRepository;
 	
-	@GetMapping("/incluirEntidade")
-	public ModelAndView incluir() {
+	@GetMapping("/entidades")
+	public ModelAndView listarEntidades(@RequestParam(name = "tipo") String tipo) {
+		
+		ModelAndView view = new ModelAndView("lista/lista_entidades");
+		
+		Iterable<Entidade> entidades = null;
+		
+		if(tipo.equalsIgnoreCase("cliente")) {
+			entidades = entidadeRepository.getClientes();
+		}else if(tipo.equalsIgnoreCase("fornecedor")){
+			entidades = entidadeRepository.getFornecedores();
+		}
+		
+		view.addObject("tipo", tipo.toUpperCase());
+		view.addObject("entidades", entidades);
+		
+		return view;
+	}
 	
+	@GetMapping("/incluirEntidade")
+	public ModelAndView incluir(@RequestParam(name = "tipo") String tipo) {
+		
+		Entidade entidade = new Entidade();
 		Iterable<Estado> estados = estadoRepository.findAll();
 		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado("PR");
 		Iterable<Pais> paises = paisRepository.findAll();
 		
+		/*seta o tipo de contribuinte para que o campo de inscrição fique readonly*/
+		entidade.setTipocontribuinte(9);
+	
+
+		if(tipo.equalsIgnoreCase("cliente")) {
+			entidade.setCliente(1);
+		}else if(tipo.equalsIgnoreCase("fornecedor")) {
+			entidade.setFornecedor(1);
+		}
+		
 		ModelAndView view = new ModelAndView("cadastro/cadastro_entidade");
-		view.addObject("tipo", "Cliente");
-		view.addObject("entidade", new Entidade());
+		
+		view.addObject("tipo", tipo.toUpperCase());
+		view.addObject("entidade", entidade);
 		view.addObject("cidades", cidades);
 		view.addObject("estados", estados);
 		view.addObject("paises", paises);
@@ -53,9 +84,13 @@ public class EntidadeController {
 	}
 	
 	@PostMapping(path="/salvarEntidade")
-	public ModelAndView cadastrar(Entidade entidade, BindingResult br, HttpServletRequest request) {
-		/*Define a entidade como cliente*/
-		entidade.setCliente(1);
+	public String cadastrar(@RequestParam(name = "tipo") String tipo, Entidade entidade, BindingResult br, HttpServletRequest request) {
+
+		if(tipo.equalsIgnoreCase("cliente")) {
+			entidade.setCliente(1);
+		}else if(tipo.equalsIgnoreCase("fornecedor")){
+			entidade.setFornecedor(1);
+		}
 		
 		String estadoSelecionado = request.getParameter("estado");
 		String cidadeSelecionada = request.getParameter("cidade");
@@ -124,38 +159,21 @@ public class EntidadeController {
 		entidade.setCpfcnpj(cpfcnpj);
 		
 		entidadeRepository.save(entidade);
-		
-		ModelAndView view = new ModelAndView("lista/lista_entidades");
-		
-		Iterable<Entidade> entidades = entidadeRepository.findAll();
-		Iterable<Estado> estados = estadoRepository.findAll();
-		
-		view.addObject("tipo", "Cliente");
-		view.addObject("entidades", entidades);
-		view.addObject("estados", estados);
-		
-		return view;
+
+		return "redirect:/entidades?tipo="+tipo;
 	}
 	
 	@GetMapping(path="/excluirEntidade")
-	@ResponseBody
-	public ModelAndView excluir(@RequestParam(required = true) Long id) {
+	public String excluir(@RequestParam(name = "tipo") String tipo, @RequestParam(required = true) Long id) {
 		
 		entidadeRepository.deleteById(id);
-		
-		ModelAndView view = new ModelAndView("lista/lista_entidades");
-		
-		Iterable<Entidade> entidades = entidadeRepository.findAll();
-		
-		view.addObject("tipo", "Cliente");
-		view.addObject("entidades", entidades);
-		
-		return view;
+
+		return "redirect:/entidades?tipo="+tipo;
 	}
 	
 	@GetMapping(path="/editarEntidade")
 	@ResponseBody
-	public ModelAndView editar(@RequestParam(required = true) Long id) {
+	public ModelAndView editar(@RequestParam(name = "tipo") String tipo, @RequestParam(required = true) Long id) {
 		
 		ModelAndView view = new ModelAndView("cadastro/cadastro_entidade");
 		
@@ -164,24 +182,11 @@ public class EntidadeController {
 		Iterable<Cidade> cidades = cidadeRepository.getCidadesByEstado(entidade.get().getEstado().getCodigo());
 		Iterable<Pais> paises = paisRepository.findAll();
 		
-		view.addObject("tipo", "Cliente");
+		view.addObject("tipo", tipo.toUpperCase());
 		view.addObject("entidade", entidade.get());
 		view.addObject("cidades", cidades);
 		view.addObject("estados", estados);
 		view.addObject("paises", paises);
-		
-		return view;
-	}
-	
-	@GetMapping("/entidades")
-	public ModelAndView listarEntidades() {
-		
-		ModelAndView view = new ModelAndView("lista/lista_entidades");
-		
-		Iterable<Entidade> entidades = entidadeRepository.findAll();
-		
-		view.addObject("tipo", "Cliente");
-		view.addObject("entidades", entidades);
 		
 		return view;
 	}
