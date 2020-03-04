@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sistema.model.Cidade;
 import com.sistema.repository.CidadeRepository;
-import com.sistema.repository.EstadoRepository;
 
 @Controller
 public class CidadeController {
 
-	@Autowired
+	@Autowired	
 	private CidadeRepository cidadeRepository;
 	
 	@RequestMapping(value = "/getCidades", 

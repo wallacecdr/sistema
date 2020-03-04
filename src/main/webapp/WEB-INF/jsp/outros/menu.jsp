@@ -78,7 +78,7 @@
           <!-- <h6 class="dropdown-header">Login Screens:</h6> -->
           <a class="dropdown-item" href="entidades?tipo=cliente">Clientes</a>
           <a class="dropdown-item" href="entidades?tipo=fornecedor">Fornecedores</a>
-          <a class="dropdown-item" href="register.html">Empresa</a>
+          <a class="dropdown-item" href="empresa">Empresa</a>
           <a class="dropdown-item" href="forgot-password.html">Produtos</a>
           <!-- <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Other Pages:</h6>

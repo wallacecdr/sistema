@@ -1,11 +1,13 @@
 package com.sistema.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +20,12 @@ public class Empresa
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "empresa_id_sequence")
     private Long id;
+	
+	@ManyToOne
+    private Estado estado;
+    @ManyToOne
+    private Cidade cidade;
+    
     @Column(length = 4)
     private String codigo;
     @Column
@@ -26,12 +34,8 @@ public class Empresa
     private String razaosoc;
     @Column(length = 60)
     private String nome;
-    @Column(length = 9)
+    @Column(length = 10)
     private String cep;
-    @Column(length = 50)
-    private String estado;
-    @Column(length = 50)
-    private String cidade;
     @Column(length = 50)
     private String endereco;
     @Column(length = 6)
@@ -42,6 +46,8 @@ public class Empresa
     private String bairro;
     @Column(length = 16)
     private String fone;
+    @Column(length = 16)
+    private String celular;
     @Column(length = 18)
     private String cnpj;
     @Column(length = 17)
@@ -85,19 +91,19 @@ public class Empresa
         this.cep = cep;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return this.estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return this.cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
@@ -141,6 +147,14 @@ public class Empresa
         this.fone = fone;
     }
 
+    public String getCelular() {
+		return celular;
+	}
+    
+    public void setCelular(String celular) {
+		this.celular = celular;
+	}
+    
     public String getCnpj() {
         return this.cnpj;
     }

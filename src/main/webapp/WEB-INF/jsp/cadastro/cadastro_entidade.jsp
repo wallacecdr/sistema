@@ -366,7 +366,7 @@
 				
 		<div class="form-row">
 			<div class="col-sm-6 mb-3">
-				<a href="/sistema/entidades?tipo=${tipo.toLowerCase()}"><button type="Button" class="btn btn-primary btn-sm">Cancelar</button></a> 
+				<a href="entidades?tipo=${tipo.toLowerCase()}"><button type="Button" class="btn btn-primary btn-sm">Cancelar</button></a> 
 			</div>
 			<div class="col-sm-6 mb-0">
 				<button type="submit" class="btn btn-primary btn-sm float-right">Salvar</button>
